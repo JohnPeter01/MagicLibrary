@@ -17,6 +17,8 @@ public class Format implements Serializable{
 	private int id;
 	private String name;
 	
+//	List<Deck> decks = new ArrayList<Deck>();
+	
 	public Format() {
 		super();
 	}
@@ -41,6 +43,14 @@ public class Format implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+
+//	public List<Deck> getDecks() {
+//		return decks;
+//	}
+
+//	public void setDecks(List<Deck> decks) {
+//		this.decks = decks;
+//	}
 
 	@Override
 	public int hashCode() {
