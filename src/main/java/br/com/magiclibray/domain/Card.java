@@ -8,35 +8,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-public class Card  implements Serializable {
+public class Card implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 	private Double price;
+	private Integer cmc;
 	
-	@ManyToMany
-	@JoinTable(name = "CARD_DECK",
-		joinColumns = @JoinColumn(name = "card_id"),
-		inverseJoinColumns = @JoinColumn(name = "deck_id")
-	)
-	private List<Deck> decks = new ArrayList<>();
+	@JsonBackReference
+	@ManyToMany(mappedBy = "cards")
+	List<Deck> decks = new ArrayList<>(); 
 	
 	public Card() {
 	}
 
-	public Card(Integer id, String name, Double price) {
-		super();
+	public Card(Integer id, String name, Double price,Integer cmc) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.cmc = cmc;
 	}
 
 	public Integer getId() {
@@ -63,12 +62,12 @@ public class Card  implements Serializable {
 		this.price = price;
 	}
 
-	public List<Deck> getCategorias() {
-		return decks;
+	public Integer getCmc() {
+		return cmc;
 	}
 
-	public void setCategorias(List<Deck> categorias) {
-		this.decks = categorias;
+	public void setCmc(Integer cmc) {
+		this.cmc = cmc;
 	}
 
 	@Override
@@ -95,4 +94,5 @@ public class Card  implements Serializable {
 			return false;
 		return true;
 	}
+	
 }
