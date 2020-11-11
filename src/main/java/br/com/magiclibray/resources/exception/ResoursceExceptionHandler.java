@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import br.com.magiclibray.service.exception.ObjectNotFoundException;
 
+/*
+ * Class to treat the error response give by the resources.
+ */
 @ControllerAdvice
 public class ResoursceExceptionHandler {
 	

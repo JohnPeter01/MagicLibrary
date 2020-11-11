@@ -8,85 +8,53 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Deck implements Serializable{
-	
+public class Set implements Serializable
+
+{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Double price;
 	
-	@JsonManagedReference //Cyclicly reference treatment
-	/*
-	 * Many to Many Mapping
-	 * Creating a Mapping table between them.
-	 */
-	@ManyToMany
-	@JoinTable( name = "DECK_CARD",  
-			joinColumns = @JoinColumn(name = "deck_id"),
-			inverseJoinColumns = @JoinColumn(name = "card_id"))
-	private List<Card> cards = new ArrayList<>();
+	@OneToMany(mappedBy = "set")
+	private List<Card> cards = new ArrayList<Card>();
 	
-	
-	public Deck() {
+	public Set() {
 	}
 
-
-	public Deck(Integer id, String name, Double price) {
+	public Set(Integer id, String name) {
 		this.id = id;
 		this.name = name;
-		this.price = price;
 	}
-
 
 	public Integer getId() {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-	public Double getPrice() {
-		return price;
-	}
-
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-
 	public List<Card> getCards() {
 		return cards;
-	} 
-
+	}
 
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -96,7 +64,6 @@ public class Deck implements Serializable{
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -105,7 +72,7 @@ public class Deck implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Deck other = (Deck) obj;
+		Set other = (Set) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -113,5 +80,6 @@ public class Deck implements Serializable{
 			return false;
 		return true;
 	}
+	
 	
 }

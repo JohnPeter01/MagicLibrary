@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,6 +26,10 @@ public class Card implements Serializable {
 	private Double price;
 	private Integer cmc;
 	
+	@ManyToOne
+	@JoinColumn(name = "set_id")
+	private Set set;
+	
 	@JsonBackReference
 	@ManyToMany(mappedBy = "cards")
 	List<Deck> decks = new ArrayList<>(); 
@@ -31,11 +37,12 @@ public class Card implements Serializable {
 	public Card() {
 	}
 
-	public Card(Integer id, String name, Double price,Integer cmc) {
+	public Card(Integer id, String name, Double price,Integer cmc,Set set) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.cmc = cmc;
+		this.set = set;
 	}
 
 	public Integer getId() {
@@ -68,6 +75,22 @@ public class Card implements Serializable {
 
 	public void setCmc(Integer cmc) {
 		this.cmc = cmc;
+	}
+
+	public List<Deck> getDecks() {
+		return decks;
+	}
+
+	public void setDecks(List<Deck> decks) {
+		this.decks = decks;
+	}
+
+	public Set getSet() {
+		return set;
+	}
+
+	public void setSet(Set set) {
+		this.set = set;
 	}
 
 	@Override
